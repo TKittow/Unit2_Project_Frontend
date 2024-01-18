@@ -1,15 +1,9 @@
-<template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
-</template>
+<script setup>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+</script>
+
+<template>
+  <main>
+    <h1><span style="color: rgb(219, 210, 83);">all</span><span style="color: blueviolet;">nightr</span></h1>
+  </main>
+</template>

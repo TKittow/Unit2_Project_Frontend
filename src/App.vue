@@ -1,23 +1,58 @@
 <script setup>
+import '@/assets/main.css'
+import { ref, onMounted } from 'vue'
+import router from '@/router';
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { useCookies } from 'vue3-cookies'
+import { decodeCredential, googleLogout } from 'vue3-google-login'
+
+const { cookies } = useCookies()
+
+let isLoggedIn = ref(false)
+let userName = ''
+
+const checkSession = () => {
+    if( cookies.isKey('user_session')){
+        isLoggedIn.value = true
+        const userData = decodeCredential(cookies.get('user_session'))
+        userName = userData.given_name
+        
+    }
+}
+
+const handleLogout = () => {
+    googleLogout()
+    cookies.remove('user_session')
+    isLoggedIn.value = false
+    
+}
+
+
+
+onMounted(checkSession)
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
+      <nav v-if="isLoggedIn === true">
+        <RouterLink to="/"><h1><span style="color: rgb(219, 210, 83);">all</span><span style="color: blueviolet;">nightr</span></h1></RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/review">See Posted Reviews</RouterLink>
+        <RouterLink to="/review/add">Add A Review</RouterLink>
+        <a href='#' @click="handleLogout">LogOut</a>
+      </nav>
+      
+      <nav v-else>
+        <RouterLink to='/login'> Login</RouterLink>
       </nav>
     </div>
   </header>
-
+<div class="content">
   <RouterView />
+</div>
 </template>
 
 <style scoped>

@@ -37,7 +37,7 @@ const updateReview = () => {
         body: JSON.stringify(review.value)
     })
     .then(() => {
-        router.replace({name: 'review'})
+        router.push('/review')
     })
     .catch(err => console.error(err))
 }
@@ -47,20 +47,24 @@ onMounted(LoadReviewData)
 
 <template>
     <h3>Add a New Review</h3>
-    <div class="bookForm">
-        <label for="location">Location:</label>
-        <input type="text" name="locaion" placeholder="E.g. 'The Cyclist'" v-model="review.location" required>
-        <br/>
-        <label for="text">Google Maps Link</label>
-        <input type="text" name="googleMapsLink" placeholder="The Google Maps Link" v-model="review.googleMapsLink" required>
-        <br/>
-        <label for="rating">Rating:</label>
-        <input type="number" min="0" name="rating" placeholder="5 Star Rating" v-model="review.rating" required>
-        <br/>
-        <label for="text">How was your night?</label>
-        <br/>
-        <textarea  name="reviewBody" placeholder="Enter your review here" v-model="review.reviewBody" rows="5" required></textarea>
-        <br/>
-        <button @click="updateReview">Submit</button>
-    </div>
+    <form>
+        <div class="mb-3">
+            <label class="form-label" for="location">Location:</label>
+            <input class="form-control" type="text" name="locaion" placeholder="E.g. 'The Cyclist'" v-model="review.location" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="text">Google Maps Link</label>
+            <input class="form-control" type="text" name="googleMapsLink" placeholder="The Google Maps Link" v-model="review.googleMapsLink" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="rating">Rating:</label>
+            <input class="form-control" type="number" min="0" name="rating" placeholder="5 Star Rating" v-model="review.rating" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="text">How was your night?</label>
+            <textarea name="reviewBody" class="form-control" placeholder="Enter your review here" v-model="review.reviewBody" rows="5" required></textarea>
+        </div>
+            <button @click="updateReview" class="btn btn-primary">Update</button>
+        
+    </form>
 </template>

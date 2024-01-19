@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue'
 import { useCookies } from 'vue3-cookies'
 import { decodeCredential, googleLogout } from 'vue3-google-login'
-import router from '@/router';
 
 const { cookies } = useCookies()
 
@@ -26,7 +25,7 @@ const callback = (response) => {
     })
     .then(() => {
         console.log('session saved')
-        
+        window.location.reload()
     })
     .catch(err => console.error(err))
 }
@@ -47,7 +46,7 @@ const handleLogout = () => {
     cookies.remove('user_session')
     isLoggedIn.value = false
     window.location.reload()
-    router.replace({name: '/'})
+    
 
 }
 
@@ -58,12 +57,15 @@ onMounted(checkSession)
 </script>
 
 <template>
-    <h1>Login Page!</h1>
+    <div class="center">
+    <h1 v-if="isLoggedIn === false">Please login below</h1>
     <div v-if="isLoggedIn">
         <p> Hello {{ userName }}</p>
+        <p>Please click on the logo in the top left to see our reviews!</p>
         <button @click="handleLogout">Log Out</button>
     </div>
     <div v-else>
         <GoogleLogin :callback="callback" />
     </div>
+</div>
 </template>

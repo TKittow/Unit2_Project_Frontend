@@ -49,23 +49,17 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-for="review in reviewBe" :key="review.id" class="frame">
-        <div><hr></div>
-        <div class="username">
-            <p>Author: {{ getUserNameById(review.author) }}</p>
-        </div>
-        <div class="location">
-            <RouterLink :to="'/review/'+review._id">{{ review.location }}</RouterLink>
-        </div>
-        <div class="stars">
-            <p>{{ review.rating }}</p>
-        </div>
-        <div class="map">
-            <p>googleMapsLink</p>
-        </div>
-        <div class="reviewActual"></div>
-        <div>
-            <hr>
+    <div class="grid-container">
+        <div v-for="review in reviewBe" :key="review.id" class="frame">
+            <div class="card" style="width: 18rem;">
+                <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p>Author: {{ getUserNameById(review.author) }}</p>
+                    <h5 class="card-title">{{ review.location }}</h5>
+                    <p class="card-text">{{ review.reviewBody }}</p>
+                    <RouterLink :to="'/review/'+review._id" class="btn btn-primary">Open in Full</RouterLink>
+                </div>
+            </div>
         </div>
     </div>
     

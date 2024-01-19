@@ -1,7 +1,6 @@
 <script setup>
 import '@/assets/main.css'
 import { ref, onMounted } from 'vue'
-import router from '@/router';
 import { RouterLink, RouterView } from 'vue-router'
 import { useCookies } from 'vue3-cookies'
 import { decodeCredential, googleLogout } from 'vue3-google-login'
@@ -9,13 +8,12 @@ import { decodeCredential, googleLogout } from 'vue3-google-login'
 const { cookies } = useCookies()
 
 let isLoggedIn = ref(false)
-let userName = ''
 
 const checkSession = () => {
     if( cookies.isKey('user_session')){
         isLoggedIn.value = true
         const userData = decodeCredential(cookies.get('user_session'))
-        userName = userData.given_name
+        console.log(userData)
         
     }
 }
@@ -24,6 +22,7 @@ const handleLogout = () => {
     googleLogout()
     cookies.remove('user_session')
     isLoggedIn.value = false
+    window.location.reload()
     
 }
 
@@ -38,9 +37,8 @@ onMounted(checkSession)
     <div class="wrapper">
 
       <nav v-if="isLoggedIn === true">
-        <RouterLink to="/"><h1><span style="color: rgb(219, 210, 83);">all</span><span style="color: blueviolet;">nightr</span></h1></RouterLink>
+        <RouterLink to="/review"><h1><span style="color: rgb(219, 210, 83);">all</span><span style="color: blueviolet;">nightr</span></h1></RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/review">See Posted Reviews</RouterLink>
         <RouterLink to="/review/add">Add A Review</RouterLink>
         <a href='#' @click="handleLogout">LogOut</a>
       </nav>
